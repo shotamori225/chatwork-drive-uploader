@@ -1,0 +1,11 @@
+# Python関係
+__pycache__/
+*.py[cod]
+.venv/
+
+# 認証ファイル（gitに上げない）
+credentials.json
+config.ini
+
+# その他
+.env
