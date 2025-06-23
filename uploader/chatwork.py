@@ -52,3 +52,25 @@ def download_file(api_token: str, room_id: str, file_id: str) -> bytes:
         raise Exception("Failed to download file from Chatwork")
 
     return file_data.content, file_info.get("filename")
+
+
+def get_new_files(api_token: str, room_id: str, last_checked: str) -> List[Dict[str, object]]:
+    """
+    指定ルームから last_checked 以降の新規ファイルを取得し、
+    ファイル名とバイナリをまとめて返す。
+
+    戻り値例：
+    [
+        {"filename": "資料1.pdf", "content": b"..."},
+        {"filename": "報告書.xlsx", "content": b"..."},
+    ]
+    """
+    new_files = fetch_files_from_room(api_token, room_id, last_checked)
+    result = []
+
+    for f in new_files:
+        file_id = f["file_id"]
+        file_data, filename = download_file(api_token, room_id, file_id)
+        result.append({"filename": filename, "content": file_data})
+
+    return result
