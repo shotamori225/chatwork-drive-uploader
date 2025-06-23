@@ -9,3 +9,7 @@ config.ini
 
 # その他
 .env
+
+# テスト系
+*copy.py
+*test.py
