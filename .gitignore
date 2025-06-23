@@ -11,5 +11,5 @@ config.ini
 .env
 
 # テスト系
-*copy.py
-*test.py
+* copy.py
+*_test.py
