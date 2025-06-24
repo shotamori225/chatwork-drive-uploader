@@ -35,3 +35,12 @@ def upload_file_to_drive(service, filename: str, file_data: bytes, folder_id: st
 
     print(f"☁️ Driveアップロード完了: {filename} (id={uploaded.get('id')})")
     return uploaded.get('id')
+
+
+def upload_file(folder_id: str, filename: str, file_data: bytes, credentials_path: str) -> str:
+    """
+    main.py から簡易的に使えるラッパー関数。
+    認証とアップロードを1ステップで実行。
+    """
+    service = get_drive_service(credentials_path)
+    return upload_file_to_drive(service, filename, file_data, folder_id)

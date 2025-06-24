@@ -21,10 +21,13 @@ def fetch_files_from_room(api_token: str, room_id: str, last_checked: str) -> Li
     # last_checkedより新しいファイルだけをフィルタ
     if last_checked:
         last_checked_dt = datetime.datetime.fromisoformat(last_checked)
-        files = [
-            f for f in files
-            if datetime.datetime.fromtimestamp(f["upload_time"]) > last_checked_dt
-        ]
+        if last_checked_dt.tzinfo is None:
+            last_checked_dt = last_checked_dt.replace(tzinfo=datetime.timezone.utc)
+
+    files = [
+        f for f in files
+        if datetime.datetime.fromtimestamp(f["upload_time"], tz=datetime.timezone.utc) > last_checked_dt
+    ]
 
     return files
 

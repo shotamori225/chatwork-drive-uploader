@@ -1,6 +1,6 @@
-from sheet import read_room_configs, update_last_checked_at
-from chatwork import get_new_files
-import drive  # Drive連携モジュール（upload_fileなどが入ってる想定）
+from uploader.sheet import read_room_configs, update_last_checked_at
+from uploader.chatwork import get_new_files
+from uploader.drive import upload_file  # Drive連携モジュール（upload_fileなどが入ってる想定）
 import configparser
 from datetime import datetime, timezone, timedelta
 
@@ -37,7 +37,7 @@ def main():
         # アップロード
         for f in files:
             try:
-                drive.upload_file(folder_id, f["filename"], f["content"], credentials_file)
+                upload_file(folder_id, f["filename"], f["content"], credentials_file)
                 print(f"  ✅ アップロード完了: {f['filename']}")
             except Exception as e:
                 print(f"  ❌ アップロード失敗: {f['filename']} → {e}")
